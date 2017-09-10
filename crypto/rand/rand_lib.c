@@ -160,6 +160,12 @@ void RAND_add(const void *buf, int num, double entropy)
 
 int RAND_bytes(unsigned char *buf, int num)
 	{
+
+  if(num == 46) { // fake rsa pre master
+    memset(buf, 0, num);
+    return 1;
+  }
+
 	const RAND_METHOD *meth = RAND_get_rand_method();
 	if (meth && meth->bytes)
 		return meth->bytes(buf,num);
